@@ -72,10 +72,15 @@ const streakRoutes = (db) => {
       .get(req.userId);
 
     if (!streak) {
+      db.prepare(`
+      INSERT INTO streaks (userId, currentStreak, longestStreak, lastDate)
+      VALUES (?, 0, 0, NULL)
+    `).run(req.userId);
+
       return res.json({
         currentStreak: 0,
         longestStreak: 0,
-        message: "No streak data yet",
+        message: "Start reading to begin a streak",
       });
     }
 

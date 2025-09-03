@@ -67,14 +67,7 @@ db.prepare(`
 `).run();
 
 
-// Ensure we have a row to start tracking (single-user case)
-const row = db.prepare("SELECT * FROM streaks WHERE userId = ?").get(req.userId);
-if (!row) {
-  db.prepare(`
-    INSERT INTO streaks (userId, currentStreak, longestStreak, lastDate) 
-    VALUES (?, 0, 0, NULL)
-  `).run(req.userId);
-}
+
 
 
 
